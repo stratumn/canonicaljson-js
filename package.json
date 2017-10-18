@@ -1,0 +1,26 @@
+{
+  "name": "canonicaljson",
+  "version": "1.0.0",
+  "description": "JS library for producing JSON in canonical format",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "pretest": "npm run build",
+    "test": "canonicaljson-spec/test.sh cli/canonicaljson.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stratumn/canonicaljson-js.git"
+  },
+  "keywords": ["stratumn", "canonical", "json", "js"],
+  "author": "Stratumn team",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/stratumn/canonicaljson-js/issues"
+  },
+  "homepage": "https://github.com/stratumn/canonicaljson-js#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
