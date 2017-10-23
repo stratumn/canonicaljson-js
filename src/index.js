@@ -14,8 +14,48 @@
   limitations under the License.
 */
 
-module.exports = {
-  stringify(jsonData) {
-    return JSON.stringify(jsonData);
+/*
+The original version of this code is taken from Mirko Kiefer's canonical-json:
+https://github.com/mirkokiefer/canonical-json/blob/master/index.js
+Modifications were made to conform to the canonicaljson spec.
+*/
+
+import Transformer from './transformer';
+
+// The stringify method takes a value and an optional replacer, and an optional
+// space parameter, and returns a JSON text. The replacer can be a function
+// that can replace values, or an array of strings that will select the keys.
+// A default replacer method can be provided. Use of the space parameter can
+// produce text that is more easily readable.
+const stringify = function(value, replacer, space) {
+  const gap = '';
+  let indent = '';
+
+  // If the space parameter is a number, make an indent string containing that
+  // many spaces.
+  if (typeof space === 'number') {
+    for (let i = 0; i < space; i += 1) {
+      indent += ' ';
+    }
+
+    // If the space parameter is a string, it will be used as the indent string.
+  } else if (typeof space === 'string') {
+    indent = space;
   }
+
+  // If there is a replacer, it must be a function or an array.
+  // Otherwise, throw an error.
+  if (
+    replacer &&
+    typeof replacer !== 'function' &&
+    (typeof replacer !== 'object' || typeof replacer.length !== 'number')
+  ) {
+    throw new Error('JSON.stringify');
+  }
+
+  // Make a fake root object containing our value under the key of ''.
+  // Return the result of stringifying the value.
+  return new Transformer(gap, indent, replacer).transform('', { '': value });
 };
+
+module.exports = stringify;
