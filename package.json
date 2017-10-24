@@ -6,7 +6,9 @@
   "scripts": {
     "build": "babel src --out-dir lib",
     "pretest": "npm run build",
-    "test": "canonicaljson-spec/test.sh cli/canonicaljson.js",
+    "test:unit": "jest",
+    "test:integration": "canonicaljson-spec/test.sh cli/canonicaljson.js",
+    "test": "npm run test:unit && npm run test:integration",
     "lint": "eslint src"
   },
   "repository": {
@@ -22,13 +24,17 @@
   "homepage": "https://github.com/stratumn/canonicaljson-js#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^21.2.0",
     "babel-preset-env": "^1.6.1",
     "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-prettier": "^2.3.1",
-    "prettier": "^1.7.4"
+    "jest": "^21.2.1",
+    "prettier": "^1.7.4",
+    "regenerator-runtime": "^0.11.0"
   },
   "dependencies": {}
 }

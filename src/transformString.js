@@ -14,8 +14,10 @@
   limitations under the License.
 */
 
+import toCodePoint from './toCodePoint';
+
 /* eslint-disable no-control-regex */
-const escapable = /[\u0022\u005c\u0000-\u001F\ud800-\udfff]/g;
+const escapable = /^[\u0022\u005c\u0000-\u001F\ud800-\udfff]$/;
 /* eslint-enable */
 
 const meta = {
@@ -29,22 +31,25 @@ const meta = {
   '\\': '\\\\'
 };
 
+// If the string contains no control characters, no quote characters, and no
+// backslash characters, then we can safely slap some quotes around it.
+// Otherwise we must also replace the offending characters with safe escape
+// sequences.
 export default function(string) {
-  // If the string contains no control characters, no quote characters, and no
-  // backslash characters, then we can safely slap some quotes around it.
-  // Otherwise we must also replace the offending characters with safe escape
-  // sequences.
+  let result = '';
 
-  escapable.lastIndex = 0;
-  return escapable.test(string)
-    ? `"${string.replace(escapable, a => {
-        const c = meta[a];
-        return typeof c === 'string'
-          ? c
-          : `\\u${`0000${a
-              .charCodeAt(0)
-              .toString(16)
-              .toUpperCase()}`.slice(-4)}`;
-      })}"`
-    : `"${string}"`;
+  /* eslint-disable no-restricted-syntax */
+  for (const char of string) {
+    if (escapable.test(char)) {
+      const c = meta[char];
+      if (c) {
+        result += c;
+      } else {
+        result += `\\u${toCodePoint(char, 4)}`;
+      }
+    } else {
+      result += char;
+    }
+  }
+  return `"${result}"`;
 }

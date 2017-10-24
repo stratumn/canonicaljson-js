@@ -16,6 +16,7 @@
 
 import transformString from './transformString';
 import transformNumber from './transformNumber';
+import sortKeys from './sortKeys';
 import join from './join';
 
 class Transformer {
@@ -81,7 +82,7 @@ class Transformer {
         this.gap += this.indent;
 
         // Is the value an array?
-        if (Object.prototype.toString.apply(value) === '[object Array]') {
+        if (Array.isArray(value)) {
           // The value is an array. Stringify every element. Use null as a placeholder
           // for non-JSON values.
           value.forEach((_, i) => {
@@ -108,7 +109,7 @@ class Transformer {
           });
         } else {
           // Otherwise, iterate through all of the keys in the object.
-          const keysSorted = Object.keys(value).sort();
+          const keysSorted = Object.keys(value).sort(sortKeys);
           keysSorted.forEach(k => {
             if (Object.prototype.hasOwnProperty.call(value, k)) {
               const v = this.transform(k, value);
