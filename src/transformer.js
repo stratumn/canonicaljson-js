@@ -19,6 +19,10 @@ import transformNumber from './transformNumber';
 import sortKeys from './sortKeys';
 import join from './join';
 
+function isBigNumber(value) {
+  return value.constructor.name === 'BigNumber';
+}
+
 class Transformer {
   constructor(gap, indent, replacer) {
     this.gap = gap;
@@ -40,7 +44,8 @@ class Transformer {
     if (
       value &&
       typeof value === 'object' &&
-      typeof value.toJSON === 'function'
+      typeof value.toJSON === 'function' &&
+      !isBigNumber(value)
     ) {
       value = value.toJSON(key);
     }
@@ -74,6 +79,10 @@ class Transformer {
         // so watch out for that case.
         if (!value) {
           return 'null';
+        }
+
+        if (isBigNumber(value)) {
+          return transformNumber(value);
         }
 
         // Make an array to hold the partial results of stringifying this object value.

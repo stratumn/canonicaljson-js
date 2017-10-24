@@ -14,7 +14,16 @@
   limitations under the License.
 */
 
+import BigNumber from 'bignumber.js';
+
 export default function(value) {
-  // JSON numbers must be finite. Encode non-finite numbers as null.
-  return Number.isFinite(value) ? String(value) : 'null';
+  const val = new BigNumber(value);
+  if (val.isInteger()) {
+    return val.toFixed();
+  }
+
+  return val
+    .toExponential()
+    .toUpperCase()
+    .replace('+', '');
 }

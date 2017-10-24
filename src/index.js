@@ -20,6 +20,7 @@ https://github.com/mirkokiefer/canonical-json/blob/master/index.js
 Modifications were made to conform to the canonicaljson spec.
 */
 
+import { parse } from 'json-bigint';
 import Transformer from './transformer';
 
 // The stringify method takes a value and an optional replacer, and an optional
@@ -27,16 +28,14 @@ import Transformer from './transformer';
 // that can replace values, or an array of strings that will select the keys.
 // A default replacer method can be provided. Use of the space parameter can
 // produce text that is more easily readable.
-const stringify = function(value, replacer, space) {
+const stringify = function stringify(value, replacer, space) {
   const gap = '';
   let indent = '';
 
   // If the space parameter is a number, make an indent string containing that
   // many spaces.
   if (typeof space === 'number') {
-    for (let i = 0; i < space; i += 1) {
-      indent += ' ';
-    }
+    indent = ' '.repeat(space);
 
     // If the space parameter is a string, it will be used as the indent string.
   } else if (typeof space === 'string') {
@@ -58,4 +57,7 @@ const stringify = function(value, replacer, space) {
   return new Transformer(gap, indent, replacer).transform('', { '': value });
 };
 
-module.exports = stringify;
+module.exports = {
+  stringify,
+  parse
+};

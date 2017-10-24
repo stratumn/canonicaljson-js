@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
-    "pretest": "npm run build",
+    "pretest:integration": "npm run build",
     "test:unit": "jest",
     "test:integration": "canonicaljson-spec/test.sh cli/canonicaljson.js",
     "test": "npm run test:unit && npm run test:integration",
@@ -36,5 +36,9 @@
     "prettier": "^1.7.4",
     "regenerator-runtime": "^0.11.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "bigdecimal": "^0.6.1",
+    "bignumber.js": "^4.1.0",
+    "json-bigint": "stratumn/json-bigint"
+  }
 }
