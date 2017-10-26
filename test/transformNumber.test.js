@@ -25,7 +25,9 @@ test('represents non negative zero', () => {
 });
 
 test('represents all non-integers numbers in exponential notation', () => {
-  testTransformNumber('0.1', '1E-1');
-
   testTransformNumber('11.1', '1.11E1');
+});
+
+test('adds a nonempty significand fractional part', () => {
+  testTransformNumber('0.1', '1.0E-1');
 });

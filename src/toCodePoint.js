@@ -14,9 +14,10 @@
   limitations under the License.
 */
 
-export default function(char, leftPad) {
-  return `${'0'.repeat(leftPad)}${char
+// Returns the code point of char left-padded with 0s
+export default function(char, length) {
+  return `${'0'.repeat(length)}${char
     .codePointAt(0)
     .toString(16)
-    .toUpperCase()}`.slice(-leftPad);
+    .toUpperCase()}`.slice(-length);
 }

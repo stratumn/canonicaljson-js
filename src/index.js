@@ -20,8 +20,8 @@ https://github.com/mirkokiefer/canonical-json/blob/master/index.js
 Modifications were made to conform to the canonicaljson spec.
 */
 
-import { parse } from 'json-bigint';
 import Transformer from './transformer';
+import Parser from './parser';
 
 // The stringify method takes a value and an optional replacer, and an optional
 // space parameter, and returns a JSON text. The replacer can be a function
@@ -55,6 +55,11 @@ const stringify = function stringify(value, replacer, space) {
   // Make a fake root object containing our value under the key of ''.
   // Return the result of stringifying the value.
   return new Transformer(gap, indent, replacer).transform('', { '': value });
+};
+
+const parse = function parse(source, reviver) {
+  const parser = new Parser(source, reviver);
+  return parser.parse();
 };
 
 module.exports = {

@@ -14,9 +14,9 @@
   limitations under the License.
 */
 
+// Joins all of the elements together, separated with commas, and wrap them in
+// wrappers ([] or {}).
 export default function(partial, wrappers, gap, mind) {
-  // Join all of the elements together, separated with commas, and wrap them in
-  // wrappers.
   if (partial.length === 0) {
     return wrappers;
   }

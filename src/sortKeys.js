@@ -16,6 +16,8 @@
 
 import toCodePoint from './toCodePoint';
 
+// MUST order the members of all objects lexicographically by the UCS (Unicode Character Set) code points of their names
+// - preserving and utilizing the code points in U+D800 through U+DFFF (inclusive) for all lone surrogates
 export default function(keyA, keyB) {
   if (keyA === keyB) return 0;
 

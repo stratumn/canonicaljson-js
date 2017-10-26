@@ -15,10 +15,7 @@
 */
 
 import toCodePoint from './toCodePoint';
-
-/* eslint-disable no-control-regex */
-const escapable = /^[\u0022\u005c\u0000-\u001F\ud800-\udfff]$/;
-/* eslint-enable */
+import forbidden from './forbidden';
 
 const meta = {
   // table of character substitutions
@@ -31,16 +28,25 @@ const meta = {
   '\\': '\\\\'
 };
 
-// If the string contains no control characters, no quote characters, and no
-// backslash characters, then we can safely slap some quotes around it.
-// Otherwise we must also replace the offending characters with safe escape
-// sequences.
+// MUST represent all strings (including object member names) in their minimal-length UTF-8 encoding
+// avoiding escape sequences for characters except those otherwise inexpressible in JSON (U+0022 QUOTATION MARK, U+005C REVERSE SOLIDUS, and ASCII control characters U+0000 through U+001F) or UTF-8 (U+D800 through U+DFFF), and
+// avoiding escape sequences for combining characters, variation selectors, and other code points that affect preceding characters, and
+// using two-character escape sequences where possible for characters that require escaping:
+// \b U+0008 BACKSPACE
+// \t U+0009 CHARACTER TABULATION ("tab")
+// \n U+000A LINE FEED ("newline")
+// \f U+000C FORM FEED
+// \r U+000D CARRIAGE RETURN
+// \" U+0022 QUOTATION MARK
+// \\ U+005C REVERSE SOLIDUS ("backslash"), and
+// using six-character \u00xx uppercase hexadecimal escape sequences for control characters that require escaping but lack a two-character sequence, and
+// using six-character \uDxxx uppercase hexadecimal escape sequences for lone surrogates
 export default function(string) {
   let result = '';
 
   /* eslint-disable no-restricted-syntax */
   for (const char of string) {
-    if (escapable.test(char)) {
+    if (forbidden.test(char)) {
       const c = meta[char];
       if (c) {
         result += c;

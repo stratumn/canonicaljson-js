@@ -16,14 +16,38 @@
 
 import BigNumber from 'bignumber.js';
 
+const emptyFractionalPart = /^(-?\d+)(E-\d+)$/;
+
+function addNonEmptySignificandFractionalPart(dec) {
+  const match = dec.match(emptyFractionalPart);
+  if (match) {
+    return `${match[1]}.0${match[2]}`;
+  }
+  return dec;
+}
+
+// MUST represent all integer numbers (those with a zero-valued fractional part)
+// without a leading minus sign when the value is zero, and
+// without a decimal point, and
+// without an exponent
+//
+// MUST represent all non-integer numbers in exponential notation
+// including a nonzero single-digit significand integer part, and
+// including a nonempty significand fractional part, and
+// including no trailing zeroes in the significand fractional part (other than as part of a ".0" required to satisfy the preceding point), and
+// including a capital "E", and
+// including no plus sign in the exponent, and
+// including no insignificant leading zeroes in the exponent
 export default function(value) {
   const val = new BigNumber(value);
   if (val.isInteger()) {
     return val.toFixed();
   }
 
-  return val
-    .toExponential()
-    .toUpperCase()
-    .replace('+', '');
+  return addNonEmptySignificandFractionalPart(
+    val
+      .toExponential()
+      .toUpperCase()
+      .replace('+', '')
+  );
 }

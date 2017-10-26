@@ -38,7 +38,6 @@
   },
   "dependencies": {
     "bigdecimal": "^0.6.1",
-    "bignumber.js": "^4.1.0",
-    "json-bigint": "stratumn/json-bigint"
+    "bignumber.js": "^4.1.0"
   }
 }
