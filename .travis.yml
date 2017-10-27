@@ -3,6 +3,8 @@ sudo: false
 cache: yarn
 node_js:
   - 6
+before_script:
+  - yarn global add codecov
 script:
   - npm test
   - codecov
