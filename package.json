@@ -2,7 +2,7 @@
   "name": "canonicaljson",
   "version": "1.0.0",
   "description": "JS library for producing JSON in canonical format",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
     "pretest:integration": "npm run build",
