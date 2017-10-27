@@ -15,6 +15,12 @@
 */
 import join from '../src/join';
 
+test('joins empty values', () => {
+  expect(join([], '[]')).toBe('[]');
+
+  expect(join([], '{}')).toBe('{}');
+});
+
 test('joins simply without gaps', () => {
   expect(join(['a', 'b', 'c', 'd'], '[]')).toBe('[a,b,c,d]');
 

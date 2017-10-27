@@ -12,7 +12,9 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-*/
+  */
+
+import BigNumber from 'bignumber.js';
 import parse from '../src/parse';
 
 function testMalformed(input) {
@@ -36,8 +38,63 @@ test('Sanity check', () => {
   expect(obj.a).toBe('b');
 });
 
-test('interprets short escaped characters correctly', () => {
-  expect(parse('{"a": "\\b"}').a).toBe('\b');
+const valid = [
+  {
+    input: 'false',
+    expect: false,
+    desc: 'false'
+  },
+  {
+    input: 'null',
+    expect: null,
+    desc: 'null'
+  },
+  {
+    input: 'true',
+    expect: true,
+    desc: 'true'
+  },
+  {
+    input: '100E+100',
+    expect: new BigNumber('100e100'),
+    desc: 'big integers'
+  },
+  {
+    input: '-1',
+    expect: -1,
+    desc: 'negative integers'
+  },
+  {
+    input: '1.21e1',
+    expect: new BigNumber('12.1'),
+    desc: 'decimal numbers'
+  },
+  {
+    input: '"\\ufb01"',
+    expect: 'ﬁ',
+    desc: 'unicode encoded characters'
+  },
+  {
+    input: '"\\b"',
+    expect: '\b',
+    desc: 'short escaped characters'
+  },
+  {
+    input: '[]',
+    expect: [],
+    desc: 'empty arrays'
+  },
+  {
+    input: '["a", 1, true]',
+    expect: ['a', 1, true],
+    desc: 'arrays'
+  }
+];
+
+valid.forEach(obj => {
+  test(`interprets  correctly ${obj.desc}}`, () => {
+    expect(parse(`{"a": ${obj.input}}`).a).toEqual(obj.expect);
+  });
 });
 
 const malformed = [
@@ -64,6 +121,18 @@ const malformed = [
   {
     input: 'fal',
     desc: 'incomplete false boolean'
+  },
+  {
+    input: 'nul',
+    desc: 'incomplete nul'
+  },
+  {
+    input: 'undefined',
+    desc: 'undefined'
+  },
+  {
+    input: '"a"}',
+    desc: 'additional character'
   }
 ];
 
@@ -71,4 +140,15 @@ malformed.forEach(obj => {
   describe(`Malformed rejection: ${obj.desc}`, () => {
     testMalformed(`{"malformed": ${obj.input}}`);
   });
+});
+
+test('calls the reviver function', () => {
+  expect(
+    parse('{ "a": 12 }', (holder, key, value) => {
+      if (key === 'a') {
+        return value * 2;
+      }
+      return value;
+    })
+  ).toEqual({ a: 24 });
 });

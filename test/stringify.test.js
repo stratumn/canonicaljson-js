@@ -13,6 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+import BigNumber from 'bignumber.js';
 import stringify from '../src/stringify';
 
 const obj = {
@@ -22,6 +23,22 @@ const obj = {
 
 test('stringifies an object', () => {
   expect(stringify(obj)).toBe('{"a":12,"b":"123"}');
+});
+
+test('stringifies a BigNumber', () => {
+  expect(
+    stringify({
+      a: new BigNumber(12)
+    })
+  ).toBe('{"a":12}');
+});
+
+test('stringifies an Array', () => {
+  expect(
+    stringify({
+      a: [1, 2, 'a']
+    })
+  ).toBe('{"a":[1,2,"a"]}');
 });
 
 test('indents with the space parameter as a number', () => {
@@ -57,4 +74,14 @@ test("calls replacer when it's a function", () => {
 
 test("stringifies only the keys specified by replacer when it's an array", () => {
   expect(stringify(obj, ['a'])).toBe('{"a":12}');
+});
+
+test('call toJSON on object if defined', () => {
+  const objWithToJSON = {
+    a: 1,
+    toJSON() {
+      return 'a=1';
+    }
+  };
+  expect(stringify(objWithToJSON)).toBe('"a=1"');
 });

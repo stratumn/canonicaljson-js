@@ -226,9 +226,6 @@ class Parser {
         key = this.string();
         this.white();
         this.next(':');
-        if (Object.hasOwnProperty.call(object, key)) {
-          throw this.error(`Duplicate key "${key}"`);
-        }
         object[key] = this.value();
         this.white();
         if (this.ch === '}') {
@@ -274,22 +271,24 @@ class Parser {
     // in an empty key. If there is not a reviver function, we simply return the
     // result.
     return typeof this.reviver === 'function'
-      ? (function walk(holder, key) {
-          let v;
-          const value = holder[key];
-          if (value && typeof value === 'object') {
-            Object.keys(value).forEach(k => {
-              v = walk(value, k);
-              if (v !== undefined) {
-                value[k] = v;
-              } else {
-                delete value[k];
-              }
-            });
-          }
-          return this.reviver.call(holder, key, value);
-        })({ '': result }, '')
+      ? this.walk({ '': result }, '')
       : result;
+  }
+
+  walk(holder, key) {
+    let v;
+    const value = holder[key];
+    if (value && typeof value === 'object') {
+      Object.keys(value).forEach(k => {
+        v = this.walk(value, k);
+        if (v !== undefined) {
+          value[k] = v;
+        } else {
+          delete value[k];
+        }
+      });
+    }
+    return this.reviver.call(null, holder, key, value);
   }
 }
 
