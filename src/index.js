@@ -17,7 +17,8 @@
 /*
 The original version of this code is taken from Mirko Kiefer's canonical-json:
 https://github.com/mirkokiefer/canonical-json/blob/master/index.js
-Modifications were made to conform to the canonicaljson spec.
+Modifications were made to conform to the canonicaljson spec:
+https://github.com/gibson042/canonicaljson-spec
 */
 
 import parse from './parse';

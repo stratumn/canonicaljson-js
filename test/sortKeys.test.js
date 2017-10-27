@@ -13,6 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+
 import sortKeys from '../src/sortKeys';
 import toCodePoint from '../src/toCodePoint';
 
