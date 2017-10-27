@@ -1,10 +1,15 @@
 {
   "name": "canonicaljson",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "JS library for producing JSON in canonical format",
   "main": "lib/canonicaljson.js",
   "module": "lib/canonicaljson.mjs",
-  "files": ["cli/", "lib/", "src/", "LICENSE"],
+  "files": [
+    "cli/",
+    "lib/",
+    "src/",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "rollup -c rollup.es.config.js && rollup -c rollup.umd.config.js",
     "pretest:integration": "npm run build",
@@ -18,7 +23,12 @@
     "type": "git",
     "url": "git+https://github.com/stratumn/canonicaljson-js.git"
   },
-  "keywords": ["stratumn", "canonical", "json", "js"],
+  "keywords": [
+    "stratumn",
+    "canonical",
+    "json",
+    "js"
+  ],
   "author": "Stratumn team",
   "license": "Apache-2.0",
   "bugs": {
