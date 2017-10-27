@@ -32,7 +32,7 @@ const escapee = {
 // data structure. It is a simple, recursive descent parser. It does not use
 // eval or regular expressions, so it can be used as a model for implementing
 // a JSON parser in other languages.
-export default class Parser {
+class Parser {
   constructor(source, reviver) {
     this.text = `${source}`;
     this.at = 0;
@@ -291,4 +291,8 @@ export default class Parser {
         })({ '': result }, '')
       : result;
   }
+}
+
+export default function(source, reviver) {
+  return new Parser(source, reviver).parse();
 }

@@ -52,8 +52,8 @@ class Transformer {
 
     // If we were called with a replacer function, then call the replacer to
     // obtain a replacement value.
-    if (typeof this.rep === 'function') {
-      value = this.rep.call(holder, key, value);
+    if (typeof this.replacer === 'function') {
+      value = this.replacer.call(null, holder, key, value);
     }
 
     // What happens next depends on the value's type.
@@ -107,7 +107,7 @@ class Transformer {
         }
 
         // If the replacer is an array, use it to select the members to be stringified.
-        if (this.replacer && typeof rep === 'object') {
+        if (this.replacer && typeof this.replacer === 'object') {
           this.replacer.forEach(rep => {
             if (typeof rep === 'string') {
               const v = this.transform(rep, value);
@@ -145,4 +145,36 @@ class Transformer {
   }
 }
 
-export default Transformer;
+// The stringify method takes a value and an optional replacer, and an optional
+// space parameter, and returns a JSON text. The replacer can be a function
+// that can replace values, or an array of strings that will select the keys.
+// A default replacer method can be provided. Use of the space parameter can
+// produce text that is more easily readable.
+export default function stringify(value, replacer, space) {
+  const gap = '';
+  let indent = '';
+
+  // If the space parameter is a number, make an indent string containing that
+  // many spaces.
+  if (typeof space === 'number') {
+    indent = ' '.repeat(space);
+
+    // If the space parameter is a string, it will be used as the indent string.
+  } else if (typeof space === 'string') {
+    indent = space;
+  }
+
+  // If there is a replacer, it must be a function or an array.
+  // Otherwise, throw an error.
+  if (
+    replacer &&
+    typeof replacer !== 'function' &&
+    (typeof replacer !== 'object' || typeof replacer.length !== 'number')
+  ) {
+    throw new Error('JSON.stringify');
+  }
+
+  // Make a fake root object containing our value under the key of ''.
+  // Return the result of stringifying the value.
+  return new Transformer(gap, indent, replacer).transform('', { '': value });
+}

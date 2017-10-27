@@ -1,4 +1,22 @@
+/*
+  Copyright 2017 Stratumn SAS. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 import BigNumber from 'bignumber.js';
+import { BigDecimal } from 'bigdecimal';
+import Big from 'big.js';
+import Decimal from 'decimal.js';
 import transformNumber from '../src/transformNumber';
 
 function testTransformNumber(from, to) {
@@ -30,4 +48,16 @@ test('represents all non-integers numbers in exponential notation', () => {
 
 test('adds a nonempty significand fractional part', () => {
   testTransformNumber('0.1', '1.0E-1');
+});
+
+test('is compatible with BigDecimal', () => {
+  expect(transformNumber(new BigDecimal('1.11'))).toBe('1.11E0');
+});
+
+test('is compatible with big.js', () => {
+  expect(transformNumber(new Big('123.4567'))).toBe('1.234567E2');
+});
+
+test('is compatible with decimal.js', () => {
+  expect(transformNumber(new Decimal('123.4567'))).toBe('1.234567E2');
 });

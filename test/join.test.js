@@ -13,17 +13,26 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+import join from '../src/join';
 
-/*
-The original version of this code is taken from Mirko Kiefer's canonical-json:
-https://github.com/mirkokiefer/canonical-json/blob/master/index.js
-Modifications were made to conform to the canonicaljson spec.
-*/
+test('joins simply without gaps', () => {
+  expect(join(['a', 'b', 'c', 'd'], '[]')).toBe('[a,b,c,d]');
 
-import parse from './parse';
-import stringify from './stringify';
+  expect(join(['a', 'b', 'c', 'd'], '{}')).toBe('{a,b,c,d}');
+});
 
-module.exports = {
-  stringify,
-  parse
-};
+test('adds a gap and mind when specified', () => {
+  expect(join(['a', 'b', 'c', 'd'], '[]', ' ', ' ')).toBe(`[
+ a,
+ b,
+ c,
+ d
+ ]`);
+
+  expect(join(['a', 'b', 'c', 'd'], '{}', ' ', ' ')).toBe(`{
+ a,
+ b,
+ c,
+ d
+ }`);
+});
