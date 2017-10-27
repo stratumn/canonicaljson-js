@@ -12,6 +12,21 @@
       {
         "singleQuote": true
       }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["rollup*.js", "test/*.js"]
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "js": "never",
+        "jsx": "never",
+        "mjs": "never"
+      }
     ]
   }
 }

@@ -2,20 +2,26 @@
   "name": "canonicaljson",
   "version": "1.0.0",
   "description": "JS library for producing JSON in canonical format",
-  "main": "lib/index.js",
+  "main": "lib/canonicaljson.js",
+  "module": "lib/canonicaljson.mjs",
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "rollup -c rollup.es.config.js && rollup -c rollup.umd.config.js",
     "pretest:integration": "npm run build",
     "test:unit": "jest --coverage",
     "test:integration": "canonicaljson-spec/test.sh cli/canonicaljson.js",
     "test": "npm run lint && npm run test:unit && npm run test:integration",
-    "lint": "eslint src"
+    "lint": "eslint src test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stratumn/canonicaljson-js.git"
   },
-  "keywords": ["stratumn", "canonical", "json", "js"],
+  "keywords": [
+    "stratumn",
+    "canonical",
+    "json",
+    "js"
+  ],
   "author": "Stratumn team",
   "license": "Apache-2.0",
   "bugs": {
@@ -25,8 +31,11 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
+    "babelrc-rollup": "^3.0.0",
     "big.js": "^5.0.3",
+    "bigdecimal": "^0.6.1",
     "decimal.js": "^7.3.0",
     "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^12.1.0",
@@ -35,10 +44,11 @@
     "eslint-plugin-prettier": "^2.3.1",
     "jest": "^21.2.1",
     "prettier": "^1.7.4",
-    "regenerator-runtime": "^0.11.0"
+    "regenerator-runtime": "^0.11.0",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2"
   },
   "dependencies": {
-    "bigdecimal": "^0.6.1",
     "bignumber.js": "^4.1.0"
   }
 }
