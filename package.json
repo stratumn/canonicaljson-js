@@ -8,19 +8,14 @@
     "pretest:integration": "npm run build",
     "test:unit": "jest",
     "test:integration": "canonicaljson-spec/test.sh cli/canonicaljson.js",
-    "test": "npm run test:unit && npm run test:integration",
+    "test": "npm run lint && npm run test:unit && npm run test:integration",
     "lint": "eslint src"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stratumn/canonicaljson-js.git"
   },
-  "keywords": [
-    "stratumn",
-    "canonical",
-    "json",
-    "js"
-  ],
+  "keywords": ["stratumn", "canonical", "json", "js"],
   "author": "Stratumn team",
   "license": "Apache-2.0",
   "bugs": {
