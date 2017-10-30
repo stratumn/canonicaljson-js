@@ -42,6 +42,10 @@ const meta = {
 // using six-character \u00xx uppercase hexadecimal escape sequences for control characters that require escaping but lack a two-character sequence, and
 // using six-character \uDxxx uppercase hexadecimal escape sequences for lone surrogates
 export default function(string) {
+  if (!forbidden.test(string)) {
+    return `"${string}"`;
+  }
+
   let result = '';
 
   /* eslint-disable no-restricted-syntax */
