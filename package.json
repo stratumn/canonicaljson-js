@@ -1,6 +1,6 @@
 {
   "name": "canonicaljson",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "JS library for producing JSON in canonical format",
   "main": "lib/canonicaljson.js",
   "module": "lib/canonicaljson.mjs",
