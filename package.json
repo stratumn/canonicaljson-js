@@ -11,7 +11,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "rollup -c rollup.es.config.js && rollup -c rollup.umd.config.js",
+    "build": "rollup -c rollup.config.js",
     "pretest:integration": "npm run build",
     "test:unit": "jest --coverage",
     "test:integration": "canonicaljson-spec/test.sh cli/canonicaljson.js",

@@ -24,7 +24,4 @@ https://github.com/gibson042/canonicaljson-spec
 import parse from './parse';
 import stringify from './stringify';
 
-module.exports = {
-  stringify,
-  parse
-};
+export { stringify, parse };
