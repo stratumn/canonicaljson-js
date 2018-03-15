@@ -42,6 +42,10 @@ test('stringifies an Array', () => {
   ).toBe('{"a":[1,2,"a"]}');
 });
 
+test('stringifies undefined as null', () => {
+  expect(stringify(undefined)).toBe(stringify(null));
+});
+
 test('indents with the space parameter as a number', () => {
   expect(stringify(obj, undefined, 2)).toBe(`{
   "a": 12,

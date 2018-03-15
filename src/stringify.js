@@ -64,6 +64,11 @@ class Transformer {
       case 'number':
         return transformNumber(value);
 
+      // undefined value must be treated the same way as a null value
+      // since the serialization must be consistent across languages
+      case 'undefined':
+        return String(null);
+
       case 'boolean':
       case 'null':
         // If the value is a boolean or null, convert it to a string. Note:
