@@ -20,7 +20,7 @@ import sortKeys from './sortKeys';
 import join from './join';
 
 function isBigNumber(value) {
-  return value.constructor.name === 'BigNumber';
+  return value && value.constructor && value.constructor.name === 'BigNumber';
 }
 
 class Transformer {
