@@ -2,7 +2,7 @@
 
 JS library for producing JSON in canonical format as specified by https://gibson042.github.io/canonicaljson-spec/. The provided interface matches that of native JSON object.
 
-[![npm](https://img.shields.io/npm/v/@stratumn/canonicaljson.svg)](https://www.npmjs.com/package/canonicaljson)
+[![npm](https://img.shields.io/npm/v/@stratumn/canonicaljson.svg)](https://www.npmjs.com/package/@stratumn/canonicaljson)
 [![build status](https://travis-ci.org/stratumn/canonicaljson-js.svg?branch=master)](https://travis-ci.org/stratumn/canonicaljson-js)
 [![codecov](https://codecov.io/gh/stratumn/canonicaljson-js/branch/master/graph/badge.svg)](https://codecov.io/gh/stratumn/canonicaljson-js)
 
