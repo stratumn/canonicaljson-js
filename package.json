@@ -1,5 +1,5 @@
 {
-  "name": "canonicaljson",
+  "name": "@stratumn/canonicaljson",
   "version": "1.0.2",
   "description": "JS library for producing JSON in canonical format",
   "main": "lib/canonicaljson.js",
