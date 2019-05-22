@@ -46,6 +46,6 @@
     "rollup-plugin-babel": "^3.0.2"
   },
   "dependencies": {
-    "bignumber.js": "^4.1.0"
+    "bignumber.js": "^8.1.1"
   }
 }
